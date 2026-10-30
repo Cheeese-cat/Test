@@ -3,18 +3,25 @@
     <el-container>
       <!-- 侧边栏 -->
       <el-aside width="240px">
-        <div class="logo" @click="router.push('/home')" style="cursor: pointer;">
-          <img :src="logoImage" alt="TestHub" class="logo-img" />
+        <div class="logo" @click="router.push('/home')">
+          <img :src="logoMark" alt="logo" class="logo-mark" />
+          <div class="logo-text">
+            <span class="brand">CT Testhub</span>
+            <span class="brand-sub">智能测试平台</span>
+          </div>
         </div>
         <el-menu
           :default-active="$route.path"
           router
-          background-color="#001529"
-          text-color="#fff"
-          active-text-color="#1890ff"
+          class="side-menu"
         >
           <!-- AI用例生成模块菜单 -->
           <template v-if="currentModule === 'ai-generation'">
+            <el-menu-item index="/ai-generation/source-analysis" class="menu-highlight">
+              <el-icon><Cpu /></el-icon>
+              <span>源码分析生成用例</span>
+              <span class="menu-dot" />
+            </el-menu-item>
             <el-sub-menu index="requirement">
               <template #title>
                 <el-icon><MagicStick /></el-icon>
@@ -447,6 +454,7 @@ import {
   SetUp, TrendCharts
 } from '@element-plus/icons-vue'
 import logoSvg from '@/assets/images/logo.svg'
+import logoMark from '@/assets/images/logo-mark.svg'
 import logoHomePng from '@/assets/images/logo_home.png'
 
 const router = useRouter()
@@ -607,6 +615,7 @@ const handleCommand = (command) => {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  background: #f4f7fc;
 }
 
 .layout > .el-container {
@@ -614,62 +623,86 @@ const handleCommand = (command) => {
   overflow: hidden;
 }
 
-.logo {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #001529;
-  color: white;
-  border-bottom: 1px solid #1f1f1f;
-  flex-shrink: 0;
-
-		.logo-img {
-			width: 100%;
-			height: 100%;
-			object-fit: fill;
-		}
-	}
-
 .el-aside {
-  background-color: #001529;
+  background: linear-gradient(180deg, #0b1b33 0%, #12294a 100%);
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: width 0.3s ease;
   width: 240px !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
 
   .el-menu {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     border-right: none;
-    
-    &::-webkit-scrollbar {
-      width: 0;
-    }
+    background: transparent;
+
+    &::-webkit-scrollbar { width: 0; }
   }
 }
 
-.el-menu {
-  :deep(.el-sub-menu__title),
-  :deep(.el-menu-item) {
+.logo {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
+  }
+
+  .logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .brand { color: #ffffff; font-size: 16px; font-weight: 700; letter-spacing: 0.8px; }
+  .brand-sub { color: #7f9bc4; font-size: 11px; letter-spacing: 2px; margin-top: 2px; }
+}
+
+.side-menu {
+  --el-menu-bg-color: transparent;
+  --el-menu-text-color: #a9bcd8;
+  --el-menu-hover-bg-color: rgba(56, 189, 248, 0.10);
+  --el-menu-active-color: #ffffff;
+  border-right: none;
+
+  :deep(.el-menu-item),
+  :deep(.el-sub-menu__title) {
+    height: 44px;
+    line-height: 44px;
+    margin: 4px 10px;
+    border-radius: 10px;
     font-size: 14px;
   }
-}
 
-.el-menu--collapse {
-  width: 64px !important;
-  
-  :deep(.el-sub-menu__title),
-  :deep(.el-menu-item) {
-    padding-left: 20px !important;
+  :deep(.el-menu-item.is-active) {
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.55), rgba(56, 189, 248, 0.16));
+    box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.35);
   }
-  
-  :deep(.el-sub-menu__title span),
-  :deep(.el-menu-item span) {
-    display: none;
+
+  :deep(.menu-highlight) {
+    color: #e6f3ff;
+  }
+
+  :deep(.menu-highlight.is-active) {
+    background: linear-gradient(90deg, #2563eb, rgba(56, 189, 248, 0.35));
+  }
+
+  :deep(.menu-dot) {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #38bdf8;
+    margin-left: auto;
+    margin-right: 6px;
+    box-shadow: 0 0 8px #38bdf8;
   }
 }
 
@@ -681,28 +714,23 @@ const handleCommand = (command) => {
 }
 
 .el-header {
-  background-color: white;
-  border-bottom: 1px solid #e8e8e8;
+  background: #ffffff;
+  border-bottom: 1px solid #eaf0f9;
   padding: 0;
   flex-shrink: 0;
   height: 60px !important;
+  box-shadow: 0 2px 12px rgba(15, 35, 70, 0.04);
 
   .header-content {
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 22px;
   }
 
-  .header-left {
-    flex: 1;
-    overflow: hidden;
-    
-    :deep(.el-breadcrumb) {
-      font-size: 14px;
-    }
-  }
+  .header-left { flex: 1; overflow: hidden; }
+  :deep(.el-breadcrumb) { font-size: 14px; }
 
   .user-info {
     display: flex;
@@ -710,255 +738,53 @@ const handleCommand = (command) => {
     cursor: pointer;
     white-space: nowrap;
 
-    .username {
-      margin: 0 8px;
-      color: #303133;
-      font-size: 14px;
-    }
+    .username { margin: 0 8px; color: #1e293b; font-size: 14px; }
   }
 }
 
-.header-right {
+.header-right { display: flex; align-items: center; gap: 20px; }
+
+.language-dropdown {
+  .language-selector {
     display: flex;
     align-items: center;
-    gap: 20px;
+    cursor: pointer;
+    color: #334155;
+    font-size: 14px;
+    outline: none;
+
+    .language-flag { font-size: 18px; margin-right: 5px; line-height: 1; }
+    span { margin: 0 4px; }
+    &:hover { color: #2563eb; }
   }
+}
 
-  .language-dropdown {
-    .language-selector {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      color: #303133;
-      font-size: 14px;
-      outline: none;
+.dropdown-flag { font-size: 16px; margin-right: 5px; }
 
-      &:focus {
-        outline: none;
-      }
+.user-dropdown .user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
 
-      .language-flag {
-        font-size: 18px;
-        margin-right: 5px;
-        line-height: 1;
-      }
-
-      span {
-        margin: 0 4px;
-      }
-
-      &:hover {
-        color: #1890ff;
-      }
-    }
-  }
-
-  .dropdown-flag {
-    font-size: 16px;
-    margin-right: 5px;
-  }
-
-  .user-dropdown {
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      white-space: nowrap;
-
-      .username {
-        margin: 0 8px;
-        color: #303133;
-      }
-    }
-  }
+  .username { margin: 0 8px; color: #1e293b; }
+}
 
 .el-main {
-  background-color: #f5f5f5;
+  background: #f4f7fc;
   padding: 20px;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-@media screen and (max-width: 1920px) {
-  .el-aside {
-    width: 220px !important;
-  }
-  
-  .el-main {
-    padding: 18px;
-  }
-}
-
 @media screen and (max-width: 1600px) {
-  .el-aside {
-    width: 200px !important;
-  }
-  
-  .el-main {
-    padding: 16px;
-  }
-
-  .el-menu {
-    :deep(.el-sub-menu__title),
-    :deep(.el-menu-item) {
-      font-size: 13px;
-    }
-  }
-}
-
-@media screen and (max-width: 1440px) {
-  .el-aside {
-    width: 180px !important;
-  }
-  
-  .el-main {
-    padding: 14px;
-  }
-
-  .el-menu {
-    :deep(.el-sub-menu__title),
-    :deep(.el-menu-item) {
-      font-size: 13px;
-    }
-  }
-}
-
-@media screen and (max-width: 1366px) {
-  .el-aside {
-    width: 180px !important;
-  }
-  
-  .el-main {
-    padding: 12px;
-  }
-
-  .el-header {
-    height: 56px !important;
-  }
-  
-  .el-menu {
-    :deep(.el-sub-menu__title),
-    :deep(.el-menu-item) {
-      font-size: 12px;
-    }
-  }
+  .el-aside { width: 210px !important; }
+  .el-main { padding: 16px; }
 }
 
 @media screen and (max-width: 1280px) {
-  .el-aside {
-    width: 160px !important;
-  }
-  
-  .el-main {
-    padding: 12px;
-  }
-
-  .el-header {
-    height: 56px !important;
-    
-    .header-content {
-      padding: 0 15px;
-    }
-  }
-  
-  .el-menu {
-    :deep(.el-sub-menu__title),
-    :deep(.el-menu-item) {
-      font-size: 12px;
-      padding-left: 15px !important;
-    }
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .el-aside {
-    width: 140px !important;
-  }
-  
-  .el-main {
-    padding: 10px;
-  }
-
-  .el-header {
-    height: 52px !important;
-    
-    .header-content {
-      padding: 0 12px;
-    }
-  }
-  
-  .el-menu {
-    :deep(.el-sub-menu__title),
-    :deep(.el-menu-item) {
-      font-size: 12px;
-      padding-left: 12px !important;
-    }
-  }
-  
-  .user-info .username {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .el-aside {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    width: 240px !important;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    
-    &.mobile-open {
-      transform: translateX(0);
-    }
-  }
-  
-  .el-main {
-    padding: 8px;
-  }
-
-  .el-header {
-    height: 50px !important;
-    
-    .header-content {
-      padding: 0 10px;
-    }
-    
-    .header-left {
-      :deep(.el-breadcrumb__item) {
-        &:not(:last-child) {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .el-aside {
-    width: 220px !important;
-  }
-  
-  .el-main {
-    padding: 6px;
-  }
-
-  .el-header {
-    height: 48px !important;
-    
-    .header-content {
-      padding: 0 8px;
-    }
-  }
-  
-  .user-info {
-    .el-avatar {
-      width: 28px !important;
-      height: 28px !important;
-    }
-  }
+  .el-aside { width: 190px !important; }
+  .brand { font-size: 14px; }
 }
 </style>

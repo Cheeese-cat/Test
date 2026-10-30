@@ -1,6 +1,13 @@
 <template>
   <div class="home-container">
     <div class="content-wrapper">
+      <div class="brand-bar" @click="handleNavigate('source')">
+        <img :src="logoMark" alt="CT Testhub" class="brand-mark" />
+        <div class="brand-text">
+          <span class="brand-name">CT Testhub</span>
+          <span class="brand-tag">智能测试平台</span>
+        </div>
+      </div>
       <div class="header-actions">
         <!-- PC：语言、用户分开 -->
         <div class="header-actions-pc">
@@ -66,7 +73,24 @@
       <h1 class="main-title">{{ $t('home.title') }}</h1>
       <p class="subtitle">{{ $t('home.subtitle') }}</p>
 
+      <div class="hero-cta">
+        <el-button type="primary" size="large" round @click="handleNavigate('source')">
+          源码分析 · 自动生成用例
+        </el-button>
+        <span class="hero-hint">输入项目路径，解析接口并生成测试用例</span>
+      </div>
+
       <div class="cards-container">
+        <!-- 源码分析生成用例（新增） -->
+        <div class="nav-card nav-card--new" @click="handleNavigate('source')" role="button" tabindex="0">
+          <span class="new-badge">NEW</span>
+          <div class="card-icon source-icon">
+            <el-icon><Cpu /></el-icon>
+          </div>
+          <h3>源码分析生成用例</h3>
+          <p>输入本地项目路径，自动解析接口并生成测试用例</p>
+        </div>
+
         <!-- AI用例生成 -->
         <div class="nav-card" @click="handleNavigate('ai')" role="button" tabindex="0">
           <div class="card-icon ai-icon">
@@ -225,6 +249,7 @@ import { useUserStore } from '@/stores/user'
 import { useAppStore } from '@/stores/app'
 import { track } from '@/utils/tracker'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import logoMark from '@/assets/images/logo-mark.svg'
 import { MagicStick, Link, Monitor, DataLine, Cpu, Setting, ChatDotRound, UserFilled, ArrowDown, Cellphone, Tickets, Select, Odometer, Connection, Document } from '@element-plus/icons-vue'
 
 const router = useRouter()
@@ -310,6 +335,7 @@ const handleLogout = () => {
 const handleNavigate = (type) => {
   const routes = {
     'ai': '/ai-generation/requirement-analysis',
+    'source': '/ai-generation/source-analysis',
     'api': '/api-testing/dashboard',
     'ui': '/ui-automation/dashboard',
     'defects': '/defects/dashboard',
@@ -344,7 +370,7 @@ const handleNavigate = (type) => {
 <style scoped lang="scss">
 .home-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(160deg, #f7faff 0%, #eaf2fd 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -357,6 +383,25 @@ const handleNavigate = (type) => {
   width: 100%;
   position: relative;
 }
+
+.brand-bar {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+}
+.brand-text { display: flex; flex-direction: column; text-align: left; line-height: 1.15; }
+.brand-name { font-size: 17px; font-weight: 700; color: #0f2748; letter-spacing: 0.5px; }
+.brand-tag { font-size: 11px; color: #64748b; letter-spacing: 1.5px; margin-top: 2px; }
 
 .header-actions {
   position: absolute;
@@ -966,6 +1011,37 @@ const handleNavigate = (type) => {
     font-size: 22px;
     border-radius: 12px;
   }
+}
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px 0 6px;
+  flex-wrap: wrap;
+}
+.hero-hint { color: #64748b; font-size: 13px; }
+
+.nav-card--new {
+  position: relative;
+  border: 1px solid rgba(37, 99, 235, 0.35) !important;
+  background: linear-gradient(160deg, #ffffff 0%, #f2f8ff 100%) !important;
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.12) !important;
+}
+.new-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+.source-icon {
+  background: linear-gradient(135deg, #2563eb, #38bdf8) !important;
+  color: #fff;
 }
 </style>
 

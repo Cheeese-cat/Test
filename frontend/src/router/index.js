@@ -95,6 +95,11 @@ const routes = [
                 component: () => import('@/views/requirement-analysis/RequirementAnalysisView.vue')
             },
             {
+                path: 'source-analysis',
+                name: 'SourceAnalysis',
+                component: () => import('@/views/source-analysis/SourceAnalysis.vue')
+            },
+            {
                 path: 'projects',
                 name: 'Projects',
                 component: ProjectList
