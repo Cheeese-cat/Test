@@ -45,7 +45,7 @@ open http://localhost
 docker compose -f docker compose.dev.yml up -d --build
 
 # 访问应用
-open http://localhost:3000
+open http://localhost:3010
 ```
 
 ## 部署模式
@@ -76,7 +76,7 @@ docker compose up -d
 - 实时编译
 - 开发服务器
 
-**端口：** 3000
+**端口：** 3010
 
 **Dockerfile：** `Dockerfile.dev`
 

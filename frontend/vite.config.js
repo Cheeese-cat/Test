@@ -29,7 +29,7 @@ export default defineConfig({
     target: 'es2022',
   },
   server: {
-    port: 3000,
+    port: 3010,
     host: '0.0.0.0',
     headers: {
       'Cache-Control': 'no-cache, no-store, must-revalidate',

@@ -34,7 +34,7 @@ npm install
 npm run dev
 ```
 
-页面地址：<http://localhost:3000>；接口文档：<http://localhost:8000/api/docs/>。
+页面地址：<http://localhost:3010>；接口文档：<http://localhost:8000/api/docs/>。
 
 ## 许可
 
